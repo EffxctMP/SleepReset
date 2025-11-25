@@ -8,8 +8,10 @@ struct SleepView: View {
     @State private var wakeBufferHours = 1.5
     @State private var showingProfile = false
     @State private var showingSettings = false
+    @State private var showingWakeBufferInfo = false
 
     private let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    private let gridCardHeight: CGFloat = 200
 
     private var appTheme: AppTheme {
         AppTheme(rawValue: themeColorRaw) ?? .default
@@ -77,12 +79,27 @@ struct SleepView: View {
                                 Slider(value: $sleepGoal, in: 4...12, step: 1)
                             }
                         }
+                        .frame(minHeight: gridCardHeight, alignment: .topLeading)
 
                         // Wake Buffer
                         GlassCard {
                             VStack(alignment: .leading, spacing: 16) {
-                                Text("Wake-up Buffer")
-                                    .font(.headline)
+                                HStack {
+                                    Text("Wake-up Buffer")
+                                        .font(.headline)
+
+                                    Spacer()
+
+                                    Button {
+                                        showingWakeBufferInfo = true
+                                    } label: {
+                                        Image(systemName: "info.circle")
+                                            .foregroundStyle(.secondary)
+                                            .imageScale(.medium)
+                                            .accessibilityLabel("Wake-up buffer info")
+                                    }
+                                    .buttonStyle(.plain)
+                                }
 
                                 Picker("Buffer", selection: $wakeBufferHours) {
                                     ForEach(wakeBufferOptions, id: \.self) { hours in
@@ -92,10 +109,13 @@ struct SleepView: View {
                                 }
                                 .pickerStyle(.menu)
                                 .tint(appTheme.accent)
-
-                                Text("We'll plan wake-up times this long before your next event.")
-                                    .foregroundStyle(.secondary)
                             }
+                        }
+                        .frame(minHeight: gridCardHeight, alignment: .topLeading)
+                        .popover(isPresented: $showingWakeBufferInfo) {
+                            Text("We'll plan wake-up times this long before your next event.")
+                                .font(.body)
+                                .padding()
                         }
                     }
                 }
