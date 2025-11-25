@@ -19,28 +19,25 @@ struct SleepView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    
-                    // MARK: Bedtime Card
+
+                    // MARK: Bedtime & Schedule
                     GlassCard {
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Recommended Bedtime")
-                                .font(.title2.weight(.semibold))
+                        VStack(alignment: .leading, spacing: 16) {
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Recommended Bedtime")
+                                    .font(.title2.weight(.semibold))
 
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text(bedtimeString)
-                                    .font(.system(size: 44, weight: .bold, design: .rounded))
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text(bedtimeString)
+                                        .font(.system(size: 44, weight: .bold, design: .rounded))
 
-                                Text("Based on your sleep goal and the next calendar event.")
-                                    .foregroundStyle(.secondary)
+                                    Text("Based on your sleep goal and the next calendar event.")
+                                        .foregroundStyle(.secondary)
+                                }
                             }
-                        }
-                    }
 
-                    // MARK: Grid
-                    LazyVGrid(columns: columns, spacing: 16) {
+                            Divider()
 
-                        // Upcoming schedule
-                        GlassCard {
                             VStack(alignment: .leading, spacing: 12) {
                                 Text("Upcoming Schedule")
                                     .font(.headline)
@@ -63,6 +60,10 @@ struct SleepView: View {
                                 }
                             }
                         }
+                    }
+
+                    // MARK: Grid
+                    LazyVGrid(columns: columns, spacing: 16) {
 
                         // Sleep Goal
                         GlassCard {
@@ -89,7 +90,7 @@ struct SleepView: View {
                                             .tag(hours)
                                     }
                                 }
-                                .pickerStyle(.segmented)
+                                .pickerStyle(.menu)
                                 .tint(appTheme.accent)
 
                                 Text("We'll plan wake-up times this long before your next event.")
