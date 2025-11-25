@@ -79,7 +79,7 @@ struct SleepView: View {
                                 Slider(value: $sleepGoal, in: 4...12, step: 1)
                             }
                         }
-                        .frame(minHeight: gridCardHeight, alignment: .topLeading)
+                        .frame(height: gridCardHeight, alignment: .topLeading)
 
                         // Wake Buffer
                         GlassCard {
@@ -111,12 +111,32 @@ struct SleepView: View {
                                 .tint(appTheme.accent)
                             }
                         }
-                        .frame(minHeight: gridCardHeight, alignment: .topLeading)
-                        .popover(isPresented: $showingWakeBufferInfo) {
-                            Text("We'll plan wake-up times this long before your next event.")
-                                .font(.body)
-                                .padding()
+                        .frame(height: gridCardHeight, alignment: .topLeading)
+                        .popover(
+                            isPresented: $showingWakeBufferInfo,
+                            attachmentAnchor: .point(.topTrailing),
+                            arrowEdge: .top
+                        ) {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text("Wake-up buffer")
+                                    .font(.headline)
+                                Text("We'll plan wake-up times this long before your next event.")
+                                    .font(.body)
+                                    .foregroundStyle(.secondary)
+                            }
+                            .padding(16)
+                            .frame(maxWidth: 240, alignment: .leading)
+                            .background(
+                                .ultraThinMaterial,
+                                in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                    .strokeBorder(Color.white.opacity(0.3), lineWidth: 1)
+                            )
+                            .shadow(color: .black.opacity(0.18), radius: 12, x: 0, y: 8)
                         }
+                        .presentationCompactAdaptation(.popover)
                     }
                 }
                 .padding(.horizontal, 20)
