@@ -10,6 +10,7 @@ struct SleepView: View {
     @State private var showingSettings = false
 
     private let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    private let gridCardHeight: CGFloat = 200
 
     private var appTheme: AppTheme {
         AppTheme(rawValue: themeColorRaw) ?? .default
@@ -77,6 +78,7 @@ struct SleepView: View {
                                 Slider(value: $sleepGoal, in: 4...12, step: 1)
                             }
                         }
+                        .frame(minHeight: gridCardHeight, alignment: .topLeading)
 
                         // Wake Buffer
                         GlassCard {
@@ -97,6 +99,7 @@ struct SleepView: View {
                                     .foregroundStyle(.secondary)
                             }
                         }
+                        .frame(minHeight: gridCardHeight, alignment: .topLeading)
                     }
                 }
                 .padding(.horizontal, 20)
